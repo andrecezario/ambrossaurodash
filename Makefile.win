@@ -1,0 +1,42 @@
+# Project: Ambrossauro
+# Makefile created by Dev-C++ 4.9.9.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+RES      = Ambrossauro_private.res
+OBJ      = main.o menu.o inicializar.o modo_infinito.o $(RES)
+LINKOBJ  = main.o menu.o inicializar.o modo_infinito.o $(RES)
+LIBS     = -L"lib" -L"lib/gcc" -static-libstdc++ -static-libgcc -mwindows -lallegro-4.4.2-monolith-mt 
+INCS     = -I"include" 
+CXXINCS  = -I"include"  -I"include/sys"  -I"include/ddk"  -I"include/gdiplus"  -I"include/GL" 
+BIN      = Ambrossauro.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS   = $(INCS)  
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before Ambrossauro.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "Ambrossauro.exe" $(LIBS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+menu.o: menu.c
+	$(CC) -c menu.c -o menu.o $(CFLAGS)
+
+inicializar.o: inicializar.c
+	$(CC) -c inicializar.c -o inicializar.o $(CFLAGS)
+
+modo_infinito.o: modo_infinito.c
+	$(CC) -c modo_infinito.c -o modo_infinito.o $(CFLAGS)
+
+Ambrossauro_private.res: Ambrossauro_private.rc Icon.rc 
+	$(WINDRES) -i Ambrossauro_private.rc --input-format=rc -o Ambrossauro_private.res -O coff 
